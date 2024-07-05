@@ -1,7 +1,7 @@
 import Book
 import Students
 import Library
-import Interface as inter
+import time
 library = Library.library()
 
 print("_____________________Library Management System_____________________")
@@ -40,30 +40,50 @@ def displayStudent():
         print("-"*30)
 
 
-times_book = int(input("Enter how many book you want to add book in the library: "))
-for i in range(times_book):
-    library.add_book(bookInput())
+def issuing():
+    student_id = int(input("Enter Student ID: "))
+    book_id = int(input("Enter Book ID: "))
+    copies = int(input("Enter Number of Copies: "))
+    library.issue_book(book_id, student_id, copies)
+
+def returning():
+    student_id = int(input("Enter Student ID: "))
+    book_id = int(input("Enter Book ID: "))
+    copies = int(input("Enter Number of Copies: "))
+    library.return_book(book_id, student_id, copies)
 
 
-# Create members
-times_student = int(input("Enter how many times you want to add students in the library: "))
-for i in range(times_student):
-    library.add_student(studentInput())
+X=True
+while X:
+    try:
+        choice = int(input("Press 1 to add books\nPress 2 to add students\nPress 3 To issue books\nPress 4 for return book\nPress 5 to display infromation of Library\nPress 6 to exit\nEnter your choice: "))
+        if choice == 1:
+            times_book = int(input("Enter how many book you want to add book in the library: "))
+            for i in range(times_book):
+                library.add_book(bookInput())
+            print("----------------------Books added successfully----------------------")
 
-
-# Issue books
-library.issue_book(123, 202204044, 1)
-library.issue_book(233, 202204045, 1)
-
-
-# Return book
-library.return_book(123, 202204044,1)
-
-# Display information after returning the book
-print("Display Information after returing book")
-
-
-
-
-displayBooks()
-displayStudent()
+        elif choice == 2:
+            times_student = int(input("Enter how many times you want to add students in the library: "))
+            for i in range(times_student):
+                library.add_student(studentInput())
+            print("----------------------Students added successfully----------------------")
+        elif choice == 3:
+            print("---------------------------Issue Book---------------------------")
+            issuing()
+        elif choice == 4:
+            print("---------------------------Return Book---------------------------")
+            returning()
+        elif choice == 5:
+            displayBooks()
+            displayStudent()
+        elif choice == 6:
+            exit()
+        else:
+            print("Invalid Choice! Try again")
+            continue
+    except ValueError as e:
+        print("----------------------------------------------------------------")
+        print("Invalid input! Please enter a number.")
+        print("----------------------------------------------------------------")
+        time.sleep(1)
